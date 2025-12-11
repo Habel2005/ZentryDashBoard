@@ -68,7 +68,6 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>All Users</CardTitle>
         <CardDescription>View and manage all registered users.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

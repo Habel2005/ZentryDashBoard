@@ -81,7 +81,6 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>All Sessions</CardTitle>
         <CardDescription>Browse, search, and view user sessions.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
