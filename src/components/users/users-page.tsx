@@ -59,7 +59,7 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
     }).sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }, [users, searchTerm]);
 
-  const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
+  const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE) || 1;
   const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * USERS_PER_PAGE,
     currentPage * USERS_PER_PAGE
@@ -142,15 +142,13 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
           </Table>
         </div>
       </CardContent>
-      {totalPages > 1 && (
-        <CardFooter className="justify-end">
-            <PaginationControls
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
-        </CardFooter>
-      )}
+      <CardFooter className="justify-end">
+          <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+          />
+      </CardFooter>
     </Card>
   );
 }

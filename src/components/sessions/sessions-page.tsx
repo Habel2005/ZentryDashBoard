@@ -72,7 +72,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
       .sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime());
   }, [sessions, searchTerm, statusFilter, userMap]);
 
-  const totalPages = Math.ceil(filteredSessions.length / SESSIONS_PER_PAGE);
+  const totalPages = Math.ceil(filteredSessions.length / SESSIONS_PER_PAGE) || 1;
   const paginatedSessions = filteredSessions.slice(
     (currentPage - 1) * SESSIONS_PER_PAGE,
     currentPage * SESSIONS_PER_PAGE
@@ -170,15 +170,13 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
           </Table>
         </div>
       </CardContent>
-      {totalPages > 1 && (
-        <CardFooter className="justify-end">
-            <PaginationControls
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
-        </CardFooter>
-      )}
+      <CardFooter className="justify-end">
+          <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+          />
+      </CardFooter>
     </Card>
   );
 }
