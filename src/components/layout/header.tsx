@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import type { Dispatch, SetStateAction } from 'react';
+import { Breadcrumbs } from './breadcrumbs';
 
 interface HeaderProps {
     setMobileOpen: Dispatch<SetStateAction<boolean>>;
@@ -20,7 +21,7 @@ export function Header({ setMobileOpen }: HeaderProps) {
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-8">
       <MobileMenuButton setMobileOpen={setMobileOpen} />
       <div className="w-full flex-1">
-        {/* Can add breadcrumbs or page title here */}
+        <Breadcrumbs />
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
