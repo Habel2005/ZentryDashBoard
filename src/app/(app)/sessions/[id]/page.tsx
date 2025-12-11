@@ -25,19 +25,6 @@ export default async function SessionDetailPage({ params }: PageProps) {
 
   return (
     <div className="space-y-6">
-       <div className="flex items-center gap-4">
-        <Button asChild variant="outline" size="icon">
-          <Link href="/sessions">
-            <ChevronLeft className="h-4 w-4" />
-            <span className="sr-only">Back to Sessions</span>
-          </Link>
-        </Button>
-        <div>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight">Session Details</h1>
-            <p className="text-muted-foreground text-sm">Session ID: <span className="font-mono">{session.id}</span></p>
-            {user && <p className="text-muted-foreground text-sm">User: {user.name} ({user.phone})</p>}
-        </div>
-      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2">
           <TranscriptViewer messages={messages} />

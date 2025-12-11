@@ -81,7 +81,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sessions</CardTitle>
+        <CardTitle>All Sessions</CardTitle>
         <CardDescription>Browse, search, and view user sessions.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -171,13 +171,15 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
           </Table>
         </div>
       </CardContent>
-      <CardFooter>
-        <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-        />
-      </CardFooter>
+      {totalPages > 1 && (
+        <CardFooter className="justify-end">
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
+        </CardFooter>
+      )}
     </Card>
   );
 }

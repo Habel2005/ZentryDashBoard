@@ -23,7 +23,7 @@ export function PaginationControls({
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-end gap-4">
       <div className="text-sm text-muted-foreground">
         Page {currentPage} of {totalPages}
       </div>

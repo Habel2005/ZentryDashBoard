@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import type { Dispatch, SetStateAction } from 'react';
 import { Breadcrumbs } from './breadcrumbs';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface HeaderProps {
     setMobileOpen: Dispatch<SetStateAction<boolean>>;
@@ -39,7 +40,9 @@ export function Header({ setMobileOpen, isSidebarCollapsed }: HeaderProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Admin</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/settings">Settings</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Logout</DropdownMenuItem>

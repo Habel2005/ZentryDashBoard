@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import { Fragment } from 'react';
 
 const breadcrumbNameMap: { [key: string]: string } = {
   '/dashboard': 'Dashboard',
@@ -12,36 +13,44 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/settings': 'Settings',
 };
 
+// Helper to capitalize first letter
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 export function Breadcrumbs() {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(segment => segment);
 
-  return (
-    <nav aria-label="Breadcrumb" className="text-sm font-medium text-muted-foreground">
-      <ol className="flex items-center gap-1.5">
-        <li>
-          <Link href="/dashboard" className="hover:text-primary transition-colors">
-            Dashboard
-          </Link>
-        </li>
-        {pathSegments.slice(1).map((segment, index) => {
-          const href = `/${pathSegments.slice(0, index + 2).join('/')}`;
-          const name = breadcrumbNameMap[href] || segment.charAt(0).toUpperCase() + segment.slice(1);
-          const isLast = index === pathSegments.length - 2;
+  const breadcrumbs = pathSegments.map((segment, index) => {
+    const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+    const name = breadcrumbNameMap[href] || capitalize(segment);
+    const isLast = index === pathSegments.length - 1;
+    return { href, name, isLast };
+  });
 
-          return (
-            <li key={href} className="flex items-center gap-1.5">
-              <ChevronRight className="h-4 w-4" />
-              {isLast ? (
-                <span className="text-foreground">{name}</span>
-              ) : (
-                <Link href={href} className="hover:text-primary transition-colors">
-                  {name}
+  return (
+    <nav aria-label="Breadcrumb">
+      <ol className="flex items-center gap-2">
+        {pathname !== '/dashboard' && (
+             <li>
+                <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors text-lg font-medium">
+                    Dashboard
                 </Link>
-              )}
             </li>
-          );
-        })}
+        )}
+        {breadcrumbs.map((crumb, index) => (
+          <Fragment key={crumb.href}>
+            {(index > 0 || pathname !== '/dashboard') && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
+            <li>
+                {crumb.isLast ? (
+                    <span className="font-semibold text-foreground text-lg">{crumb.name}</span>
+                ) : (
+                    <Link href={crumb.href} className="text-muted-foreground hover:text-primary transition-colors text-lg font-medium">
+                    {crumb.name}
+                    </Link>
+                )}
+            </li>
+          </Fragment>
+        ))}
       </ol>
     </nav>
   );
