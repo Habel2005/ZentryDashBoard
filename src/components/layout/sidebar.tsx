@@ -10,7 +10,6 @@ import {
   Settings,
   X,
   PanelLeft,
-  PanelRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -125,7 +124,7 @@ export function Sidebar({ isMobileOpen, setMobileOpen, isCollapsed, setCollapsed
       <div
         className={cn(
           'fixed inset-0 z-50 bg-black/60 transition-opacity duration-300 md:hidden',
-          isMobileOpen ? 'opacity-100' : 'pointer-events-none'
+          isMobileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
         onClick={() => setMobileOpen(false)}
       />
