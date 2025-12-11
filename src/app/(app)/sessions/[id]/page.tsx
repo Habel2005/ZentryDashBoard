@@ -10,7 +10,6 @@ interface PageProps {
   params: { id: string };
 }
 
-// TODO: Supabase - Replace fetch calls with Supabase client queries.
 export default async function SessionDetailPage({ params }: PageProps) {
   const [session, messages, summary, users] = await Promise.all([
     fetchSession(params.id),
@@ -23,7 +22,7 @@ export default async function SessionDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const user = users.find(u => u.id === session.userId);
+  const user = users.find(u => u.phone === session.user_phone);
 
   return (
     <div className="space-y-6">

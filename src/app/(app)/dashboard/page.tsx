@@ -3,7 +3,6 @@ import { KpiCard } from '@/components/dashboard/kpi-card';
 import { RecentSessions } from '@/components/dashboard/recent-sessions';
 import { Users, MessageSquare, Hourglass, CheckCircle } from 'lucide-react';
 
-// TODO: Supabase - Replace fetch calls with Supabase client queries.
 export default async function DashboardPage() {
   const users = await fetchUsers();
   const sessions = await fetchSessions();

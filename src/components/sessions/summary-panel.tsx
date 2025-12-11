@@ -19,6 +19,10 @@ interface SummaryPanelProps {
 
 export function SummaryPanel({ summary, session }: SummaryPanelProps) {
     if (!session) return null;
+    
+    const modelName = summary?.model_meta?.name || session?.meta?.model || 'N/A';
+    const tokensUsed = summary?.model_meta?.tokens;
+
 
   return (
     <Card className="sticky top-24">
@@ -29,11 +33,11 @@ export function SummaryPanel({ summary, session }: SummaryPanelProps) {
       <CardContent className="space-y-4">
         {summary ? (
           <>
-            <p className="text-sm text-muted-foreground">{summary.summary}</p>
+            <p className="text-sm text-muted-foreground">{summary.summary_text}</p>
             <Separator />
             <div className="space-y-2 text-sm">
-                <MetadataRow label="Model" value={summary.model} />
-                <MetadataRow label="Tokens Used" value={summary.tokens.toString()} />
+                <MetadataRow label="Model" value={modelName} />
+                {tokensUsed && <MetadataRow label="Tokens Used" value={tokensUsed.toString()} />}
                 <MetadataRow label="Summary Date" value={format(new Date(summary.created_at), "MMM d, yyyy 'at' h:mm a")} />
             </div>
           </>

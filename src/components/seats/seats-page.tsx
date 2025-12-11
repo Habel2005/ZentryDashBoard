@@ -43,7 +43,7 @@ export function SeatsPage({ initialSeats }: SeatsPageProps) {
 
   const handleUpdate = (updatedSeat: SeatAvailability) => {
     setSeats(currentSeats =>
-      currentSeats.map(s => (s.id === updatedSeat.id ? updatedSeat : s))
+      currentSeats.map(s => (s.program_id === updatedSeat.program_id ? updatedSeat : s))
     );
   };
 
@@ -63,7 +63,7 @@ export function SeatsPage({ initialSeats }: SeatsPageProps) {
                 <TableRow>
                   <TableHead>Program</TableHead>
                   <TableHead>Campus</TableHead>
-                  <TableHead>Quota</TableHead>
+                  <TableHead>Quota Type</TableHead>
                   <TableHead>Available Seats</TableHead>
                   <TableHead>Last Updated</TableHead>
                   <TableHead className="text-right">Action</TableHead>
@@ -71,11 +71,11 @@ export function SeatsPage({ initialSeats }: SeatsPageProps) {
               </TableHeader>
               <TableBody>
                 {seats.map(seat => (
-                  <TableRow key={seat.id}>
-                    <TableCell className="font-medium">{seat.program}</TableCell>
+                  <TableRow key={seat.program_id}>
+                    <TableCell className="font-medium">{seat.program_name}</TableCell>
                     <TableCell>{seat.campus}</TableCell>
-                    <TableCell>{seat.quota}</TableCell>
-                    <TableCell className="font-semibold">{seat.available}</TableCell>
+                    <TableCell>{seat.quota_type}</TableCell>
+                    <TableCell className="font-semibold">{seat.available_seats}</TableCell>
                     <TableCell title={format(new Date(seat.last_updated), "PPPppp")}>
                         {formatDistanceToNow(new Date(seat.last_updated), { addSuffix: true })}
                     </TableCell>

@@ -1,3 +1,5 @@
+import 'server-only';
+import { createClient } from '@/lib/supabase/server';
 import {
   User,
   Session,
@@ -5,57 +7,89 @@ import {
   SessionSummary,
   SeatAvailability,
 } from './definitions';
-import users from './data/users.json';
-import sessions from './data/sessions.json';
-import sessionMessages from './data/session_messages.json';
-import sessionSummaries from './data/session_summaries.json';
-import seatAvailability from './data/seat_availability.json';
 
-// Simulate network delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// TODO: Supabase - Replace these mock API calls with actual Supabase client queries.
+// The new API uses Supabase directly.
+// The functions below are examples of how you might query your database.
+// You will need to adjust them to fit your actual schema and requirements.
 
 export async function fetchUsers(): Promise<User[]> {
-  await delay(200);
-  return users as User[];
+  const supabase = createClient();
+  const { data, error } = await supabase.from('users').select('*').order('created_at', { ascending: false });
+  if (error) {
+    console.error('Error fetching users:', error);
+    return [];
+  }
+  // The 'users' table might not have 'last_seen', so we add a default value.
+  // This depends on your actual schema.
+  return data.map(user => ({ ...user, last_seen: user.last_seen || new Date().toISOString() }));
 }
 
 export async function fetchSessions(): Promise<Session[]> {
-  await delay(200);
-  return sessions as Session[];
+  const supabase = createClient();
+  const { data, error } = await supabase.from('sessions').select('*').order('start_time', { ascending: false });
+  if (error) {
+    console.error('Error fetching sessions:', error);
+    return [];
+  }
+  return data;
 }
 
 export async function fetchSession(id: string): Promise<Session | undefined> {
-  await delay(200);
-  return (sessions as Session[]).find(s => s.id === id);
+    const supabase = createClient();
+    const { data, error } = await supabase.from('sessions').select('*').eq('id', id).single();
+    if (error) {
+        console.error('Error fetching session:', error);
+        return undefined;
+    }
+    return data || undefined;
 }
 
+
 export async function fetchSessionMessages(sessionId: string): Promise<SessionMessage[]> {
-  await delay(200);
-  return (sessionMessages as SessionMessage[]).filter(m => m.session_id === sessionId);
+  const supabase = createClient();
+  const { data, error } = await supabase.from('session_messages').select('*').eq('session_id', sessionId).order('created_at', { ascending: true });
+  if (error) {
+    console.error('Error fetching session messages:', error);
+    return [];
+  }
+  return data;
 }
 
 export async function fetchSessionSummary(sessionId: string): Promise<SessionSummary | undefined> {
-  await delay(200);
-  return (sessionSummaries as SessionSummary[]).find(s => s.session_id === sessionId);
+    const supabase = createClient();
+    const { data, error } = await supabase.from('session_summaries').select('*').eq('session_id', sessionId).maybeSingle();
+    if (error) {
+        console.error('Error fetching session summary:', error);
+        return undefined;
+    }
+    return data || undefined;
 }
 
 export async function fetchSeatAvailability(): Promise<SeatAvailability[]> {
-  await delay(200);
-  return seatAvailability as SeatAvailability[];
+  const supabase = createClient();
+  const { data, error } = await supabase.from('seat_availability').select('*').order('program_name');
+  if (error) {
+    console.error('Error fetching seat availability:', error);
+    return [];
+  }
+  return data;
 }
 
-// This is a mock function. In a real app, this would be a server action
-// updating the database and revalidating the path.
-export async function updateSeat(programId: string, newCount: number): Promise<SeatAvailability | undefined> {
-  await delay(500);
-  // This is a client-side mock update. It does not persist.
-  const seatToUpdate = seatAvailability.find(s => s.id === programId);
-  if (seatToUpdate) {
-    seatToUpdate.available = newCount;
-    seatToUpdate.last_updated = new Date().toISOString();
-    return seatToUpdate;
+export async function updateSeat(programId: string, newCount: number): Promise<SeatAvailability | null> {
+  'use server'
+  const supabase = createClient();
+  
+  const { data, error } = await supabase
+    .from('seat_availability')
+    .update({ available_seats: newCount, last_updated: new Date().toISOString() })
+    .eq('program_id', programId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error updating seat:', error);
+    return null;
   }
-  return undefined;
+  
+  return data;
 }

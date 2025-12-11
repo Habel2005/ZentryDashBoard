@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import {
   Table,
@@ -27,7 +29,7 @@ interface RecentSessionsProps {
 }
 
 export function RecentSessions({ sessions, users }: RecentSessionsProps) {
-  const userMap = new Map(users.map(user => [user.id, user]));
+  const userMap = new Map(users.map(user => [user.phone, user]));
 
   return (
     <Card>
@@ -53,12 +55,14 @@ export function RecentSessions({ sessions, users }: RecentSessionsProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sessions.slice(0, 5).map(session => (
+            {sessions.slice(0, 5).map(session => {
+              const user = userMap.get(session.user_phone);
+              return (
               <TableRow key={session.id}>
                 <TableCell>
-                  <div className="font-medium">{userMap.get(session.userId)?.name || 'Unknown User'}</div>
+                  <div className="font-medium">{user?.name || 'Unknown User'}</div>
                   <div className="hidden text-sm text-muted-foreground md:inline">
-                    {userMap.get(session.userId)?.phone}
+                    {session.user_phone}
                   </div>
                 </TableCell>
                 <TableCell>
@@ -76,7 +80,7 @@ export function RecentSessions({ sessions, users }: RecentSessionsProps) {
                     {formatDistanceToNow(new Date(session.start_time), { addSuffix: true })}
                 </TableCell>
               </TableRow>
-            ))}
+            )})}
           </TableBody>
         </Table>
       </CardContent>

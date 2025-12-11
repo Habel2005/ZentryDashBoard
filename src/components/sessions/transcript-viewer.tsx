@@ -52,7 +52,7 @@ export function TranscriptViewer({ messages }: TranscriptViewerProps) {
                 )}
               </div>
               <div className="text-xs text-muted-foreground">
-                {format(new Date(message.timestamp), 'h:mm a')}
+                {format(new Date(message.created_at), 'h:mm a')}
                 {message.tokens && ` · ${message.tokens} tokens`}
               </div>
             </div>

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   Table,
   TableBody,
@@ -31,7 +32,7 @@ import { Badge } from '@/components/ui/badge';
 import { Eye, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Session, User } from '@/lib/definitions';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { PaginationControls } from '../shared/pagination-controls';
 
 interface SessionsPageProps {
@@ -42,20 +43,28 @@ interface SessionsPageProps {
 const SESSIONS_PER_PAGE = 8;
 
 export function SessionsPage({ sessions, users }: SessionsPageProps) {
+  const searchParams = useSearchParams();
+  const userPhoneQuery = searchParams.get('userPhone');
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const userMap = useMemo(() => new Map(users.map(user => [user.id, user])), [users]);
+  useEffect(() => {
+    if (userPhoneQuery) {
+      setSearchTerm(userPhoneQuery);
+    }
+  }, [userPhoneQuery]);
+
+  const userMap = useMemo(() => new Map(users.map(user => [user.phone, user])), [users]);
 
   const filteredSessions = useMemo(() => {
     return sessions
       .filter(session => {
-        const user = userMap.get(session.userId);
-        const userPhone = user?.phone.toLowerCase() || '';
+        const user = userMap.get(session.user_phone);
         const lowerCaseSearch = searchTerm.toLowerCase();
         
-        const matchesSearch = userPhone.includes(lowerCaseSearch) || session.id.toLowerCase().includes(lowerCaseSearch);
+        const matchesSearch = session.user_phone.toLowerCase().includes(lowerCaseSearch) || session.id.toLowerCase().includes(lowerCaseSearch);
         const matchesStatus = statusFilter === 'all' || session.status === statusFilter;
         
         return matchesSearch && matchesStatus;
@@ -133,7 +142,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
                 paginatedSessions.map(session => (
                   <TableRow key={session.id}>
                     <TableCell className="font-mono text-xs">{session.id}</TableCell>
-                    <TableCell>{userMap.get(session.userId)?.phone || 'N/A'}</TableCell>
+                    <TableCell>{userMap.get(session.user_phone)?.name || session.user_phone}</TableCell>
                     <TableCell>
                       <Badge
                         className={cn('capitalize', {

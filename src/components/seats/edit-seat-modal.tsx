@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import type { SeatAvailability } from '@/lib/definitions';
 import { updateSeat } from '@/lib/api';
+import { revalidatePath } from 'next/cache';
 
 interface EditSeatModalProps {
   seat: SeatAvailability | null;
@@ -28,6 +29,12 @@ export function EditSeatModal({ seat, isOpen, onClose, onUpdate }: EditSeatModal
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   
+  useEffect(() => {
+    if (seat) {
+      setAvailableSeats(seat.available_seats);
+    }
+  }, [seat]);
+
   if (!seat) return null;
 
   const handleSave = async () => {
@@ -42,9 +49,8 @@ export function EditSeatModal({ seat, isOpen, onClose, onUpdate }: EditSeatModal
     }
     
     setIsLoading(true);
-    // TODO: Supabase - Replace with a server action calling Supabase
     try {
-        const updatedSeat = await updateSeat(seat.id, newCount);
+        const updatedSeat = await updateSeat(seat.program_id, newCount);
         if (updatedSeat) {
             onUpdate(updatedSeat);
             toast({
@@ -72,7 +78,7 @@ export function EditSeatModal({ seat, isOpen, onClose, onUpdate }: EditSeatModal
         <DialogHeader>
           <DialogTitle>Edit Seat Availability</DialogTitle>
           <DialogDescription>
-            Update the number of available seats for {seat.program} at {seat.campus}.
+            Update the number of available seats for {seat.program_name} at {seat.campus}.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -83,16 +89,16 @@ export function EditSeatModal({ seat, isOpen, onClose, onUpdate }: EditSeatModal
             <Input
               id="available-seats"
               type="number"
-              defaultValue={seat.available}
+              value={availableSeats}
               onChange={(e) => setAvailableSeats(e.target.value)}
               className="col-span-3"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">
-              Quota
+              Quota Type
             </Label>
-            <p className="col-span-3 text-sm text-muted-foreground">{seat.quota}</p>
+            <p className="col-span-3 text-sm text-muted-foreground">{seat.quota_type}</p>
           </div>
         </div>
         <DialogFooter>

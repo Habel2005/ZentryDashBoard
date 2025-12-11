@@ -1,7 +1,6 @@
 import { fetchSeatAvailability } from '@/lib/api';
 import { SeatsPage } from '@/components/seats/seats-page';
 
-// TODO: Supabase - Replace fetch call with Supabase client query.
 export default async function SeatManagementPage() {
   const seats = await fetchSeatAvailability();
 

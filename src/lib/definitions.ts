@@ -1,43 +1,47 @@
 export type User = {
-  id: string;
-  name: string;
+  id: string; // Assuming UUID from Supabase
   phone: string;
+  name: string;
+  email: string | null;
   created_at: string;
   last_seen: string;
 };
 
 export type Session = {
-  id: string;
-  userId: string;
+  id: string; // UUID
+  user_phone: string;
+  channel: string;
+  status: 'active' | 'completed' | 'failed';
   start_time: string;
   end_time: string | null;
-  status: 'active' | 'completed' | 'failed';
+  meta: Record<string, any> | null;
+  user_id: string | null;
 };
 
 export type SessionMessage = {
-  id: string;
+  id: number; // biginc
   session_id: string;
   sender: 'user' | 'agent';
   text: string;
-  timestamp: string;
-  tokens?: number;
-  tool_used?: string;
+  tokens: number | null;
+  created_at: string;
+  tool_used?: string; // This might come from meta or be a separate field
 };
 
 export type SessionSummary = {
-  id: string;
+  id: number; // biginc
   session_id: string;
-  summary: string;
-  model: string;
-  tokens: number;
+  summary_text: string;
+  summary_type: string;
+  model_meta: Record<string, any> | null;
   created_at: string;
 };
 
 export type SeatAvailability = {
-  id: string;
-  program: string;
+  program_id: string;
+  program_name: string;
   campus: string;
-  quota: number;
-  available: number;
-  last_updated: string;
+  quota_type: string;
+  available_seats: number;
+  last_updated: string; // timestamptz
 };

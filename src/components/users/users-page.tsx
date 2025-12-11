@@ -40,17 +40,21 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
   const sessionCounts = useMemo(() => {
     const counts = new Map<string, number>();
     sessions.forEach(session => {
-      counts.set(session.userId, (counts.get(session.userId) || 0) + 1);
+      const phone = session.user_phone;
+      if(phone) {
+        counts.set(phone, (counts.get(phone) || 0) + 1);
+      }
     });
     return counts;
   }, [sessions]);
-
+  
   const filteredUsers = useMemo(() => {
     return users.filter(user => {
       const lowerCaseSearch = searchTerm.toLowerCase();
       return (
         user.name.toLowerCase().includes(lowerCaseSearch) ||
-        user.phone.toLowerCase().includes(lowerCaseSearch)
+        user.phone.toLowerCase().includes(lowerCaseSearch) ||
+        (user.email && user.email.toLowerCase().includes(lowerCaseSearch))
       );
     }).sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }, [users, searchTerm]);
@@ -72,7 +76,7 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search by name or phone..."
+              placeholder="Search by name, phone, or email..."
               className="pl-10"
               value={searchTerm}
               onChange={(e) => {
@@ -89,7 +93,7 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
               <TableRow>
                 <TableHead>User</TableHead>
                 <TableHead>Contact</TableHead>
-                <TableHead>Last Seen</TableHead>
+                <TableHead>Joined</TableHead>
                 <TableHead>Total Sessions</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -108,16 +112,19 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
                         <div className="font-medium">{user.name}</div>
                       </div>
                     </TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell title={format(new Date(user.last_seen), "PPPppp")}>
-                        {formatDistanceToNow(new Date(user.last_seen), { addSuffix: true })}
+                    <TableCell>
+                        <div>{user.phone}</div>
+                        <div className="text-muted-foreground text-sm">{user.email}</div>
+                    </TableCell>
+                    <TableCell title={format(new Date(user.created_at), "PPPppp")}>
+                        {formatDistanceToNow(new Date(user.created_at), { addSuffix: true })}
                     </TableCell>
                     <TableCell className="text-center">
-                      {sessionCounts.get(user.id) || 0}
+                      {sessionCounts.get(user.phone) || 0}
                     </TableCell>
                     <TableCell className="text-right">
                       <Button asChild variant="outline" size="sm">
-                        <Link href={`/sessions?userId=${user.id}`}>
+                        <Link href={`/sessions?userPhone=${user.phone}`}>
                           <MessageSquare className="mr-2 h-4 w-4" />
                           View Sessions
                         </Link>

@@ -1,8 +1,17 @@
 import { fetchSessions, fetchUsers } from '@/lib/api';
 import { SessionsPage } from '@/components/sessions/sessions-page';
+import { Suspense } from 'react';
 
-// TODO: Supabase - Replace fetch calls with Supabase client queries.
-export default async function SessionsListPage() {
+function SessionsPageContent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SessionsPageLoader />
+    </Suspense>
+  )
+}
+
+
+async function SessionsPageLoader() {
   const sessions = await fetchSessions();
   const users = await fetchUsers();
   
@@ -12,3 +21,5 @@ export default async function SessionsListPage() {
     </div>
   );
 }
+
+export default SessionsPageContent;
