@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Table,
@@ -36,6 +36,11 @@ const USERS_PER_PAGE = 8;
 export function UsersPage({ users, sessions }: UsersPageProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const sessionCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -115,8 +120,8 @@ export function UsersPage({ users, sessions }: UsersPageProps) {
                         <div>{user.phone}</div>
                         <div className="text-muted-foreground text-sm">{user.email}</div>
                     </TableCell>
-                    <TableCell title={format(new Date(user.created_at), "PPPppp")}>
-                        {formatDistanceToNow(new Date(user.created_at), { addSuffix: true })}
+                    <TableCell title={isClient ? format(new Date(user.created_at), "PPPppp") : ''}>
+                        {isClient ? formatDistanceToNow(new Date(user.created_at), { addSuffix: true }) : ''}
                     </TableCell>
                     <TableCell className="text-center">
                       {sessionCounts.get(user.phone) || 0}
