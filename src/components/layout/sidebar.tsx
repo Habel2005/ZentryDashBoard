@@ -141,8 +141,35 @@ export function Sidebar({ isMobileOpen, setMobileOpen, isCollapsed, setCollapsed
             </Button>
         </div>
         <div className="flex h-full max-h-screen flex-col">
-            {navContent}
-            {footerNav}
+            <nav className="flex-1 space-y-2 p-4">
+                {mainNavItems.map((item) => (
+                     <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={cn(
+                            'flex items-center rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:text-primary hover:bg-muted',
+                            (usePathname() === item.href || (item.href !== '/dashboard' && usePathname().startsWith(item.href))) && 'bg-primary/10 text-primary'
+                        )}
+                    >
+                        <item.icon className="h-5 w-5 shrink-0" />
+                        <span className="ml-3">{item.label}</span>
+                    </Link>
+                ))}
+            </nav>
+            <div className="mt-auto border-t p-4">
+                <Link
+                    href={settingsNavItem.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                        'flex items-center rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:text-primary hover:bg-muted',
+                        usePathname() === settingsNavItem.href && 'bg-primary/10 text-primary'
+                    )}
+                >
+                    <settingsNavItem.icon className="h-5 w-5 shrink-0" />
+                    <span className="ml-3">{settingsNavItem.label}</span>
+                </Link>
+            </div>
         </div>
       </aside>
 

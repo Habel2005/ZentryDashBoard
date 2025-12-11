@@ -19,9 +19,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       />
       <div className={cn(
           "flex flex-1 flex-col transition-all duration-300 ease-in-out",
-          isSidebarCollapsed ? "ml-20" : "ml-64"
+          "md:ml-64", // Default margin for desktop
+          isSidebarCollapsed ? "md:ml-20" : "md:ml-64" // Conditional margin for desktop
         )}>
-        <Header setMobileOpen={setMobileOpen} isSidebarCollapsed={isSidebarCollapsed} />
+        <Header setMobileOpen={setMobileOpen} />
         <main className="flex-1 bg-background p-4 md:p-8">
           {children}
         </main>
