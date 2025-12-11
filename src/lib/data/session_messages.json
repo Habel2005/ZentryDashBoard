@@ -1,0 +1,70 @@
+[
+  {
+    "id": "msg_1_1",
+    "session_id": "ses_1",
+    "sender": "user",
+    "text": "Hi, I'd like to know more about the computer science program.",
+    "timestamp": "2023-10-28T14:00:15Z"
+  },
+  {
+    "id": "msg_1_2",
+    "session_id": "ses_1",
+    "sender": "agent",
+    "text": "Of course! The Computer Science program at our main campus is a 4-year course focusing on software development, AI, and cybersecurity. Are you interested in admission requirements?",
+    "timestamp": "2023-10-28T14:00:45Z",
+    "tokens": 45
+  },
+  {
+    "id": "msg_1_3",
+    "session_id": "ses_1",
+    "sender": "user",
+    "text": "Yes, please. And are there any available seats for the next intake?",
+    "timestamp": "2023-10-28T14:01:10Z"
+  },
+  {
+    "id": "msg_1_4",
+    "session_id": "ses_1",
+    "sender": "agent",
+    "text": "For admissions, you need a high school diploma with a GPA of 3.5 or higher, and strong grades in Math. Let me check the seat availability for you.",
+    "timestamp": "2023-10-28T14:01:40Z",
+    "tokens": 38,
+    "tool_used": "get_seat_availability"
+  },
+  {
+    "id": "msg_1_5",
+    "session_id": "ses_1",
+    "sender": "agent",
+    "text": "Good news! There are currently 12 available seats for the upcoming Fall semester in the Computer Science program at the Maplewood campus.",
+    "timestamp": "2023-10-28T14:02:05Z",
+    "tokens": 30
+  },
+  {
+    "id": "msg_1_6",
+    "session_id": "ses_1",
+    "sender": "user",
+    "text": "That's great! Thanks for the help.",
+    "timestamp": "2023-10-28T14:02:20Z"
+  },
+  {
+    "id": "msg_2_1",
+    "session_id": "ses_2",
+    "sender": "user",
+    "text": "What about the business program?",
+    "timestamp": "2023-10-29T09:00:05Z"
+  },
+  {
+    "id": "msg_3_1",
+    "session_id": "ses_3",
+    "sender": "user",
+    "text": "My application status?",
+    "timestamp": "2023-10-30T18:00:05Z"
+  },
+  {
+    "id": "msg_3_2",
+    "session_id": "ses_3",
+    "sender": "agent",
+    "text": "I can help with that. Could you please provide your application ID?",
+    "timestamp": "2023-10-30T18:00:20Z",
+    "tokens": 12
+  }
+]

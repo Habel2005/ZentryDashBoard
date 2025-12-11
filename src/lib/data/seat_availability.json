@@ -1,0 +1,42 @@
+[
+  {
+    "id": "seat_1",
+    "program": "Computer Science",
+    "campus": "Maplewood Campus",
+    "quota": 150,
+    "available": 12,
+    "last_updated": "2023-10-28T14:02:05Z"
+  },
+  {
+    "id": "seat_2",
+    "program": "Business Administration",
+    "campus": "Lakeside Campus",
+    "quota": 200,
+    "available": 45,
+    "last_updated": "2023-10-27T10:00:00Z"
+  },
+  {
+    "id": "seat_3",
+    "program": "Graphic Design",
+    "campus": "Downtown Center",
+    "quota": 80,
+    "available": 5,
+    "last_updated": "2023-10-29T11:30:00Z"
+  },
+  {
+    "id": "seat_4",
+    "program": "Nursing",
+    "campus": "Westwood Medical",
+    "quota": 120,
+    "available": 0,
+    "last_updated": "2023-10-25T18:00:00Z"
+  },
+    {
+    "id": "seat_5",
+    "program": "Mechanical Engineering",
+    "campus": "Maplewood Campus",
+    "quota": 100,
+    "available": 22,
+    "last_updated": "2023-10-30T09:00:00Z"
+  }
+]

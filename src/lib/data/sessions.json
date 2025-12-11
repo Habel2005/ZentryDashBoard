@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ses_1",
+    "userId": "usr_1",
+    "start_time": "2023-10-28T14:00:00Z",
+    "end_time": "2023-10-28T14:30:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_2",
+    "userId": "usr_2",
+    "start_time": "2023-10-29T09:00:00Z",
+    "end_time": "2023-10-29T09:15:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_3",
+    "userId": "usr_3",
+    "start_time": "2023-10-30T18:00:00Z",
+    "end_time": null,
+    "status": "active"
+  },
+  {
+    "id": "ses_4",
+    "userId": "usr_4",
+    "start_time": "2023-10-28T11:30:00Z",
+    "end_time": "2023-10-28T11:45:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_5",
+    "userId": "usr_5",
+    "start_time": "2023-10-29T19:45:00Z",
+    "end_time": "2023-10-29T20:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_6",
+    "userId": "usr_1",
+    "start_time": "2023-10-25T10:00:00Z",
+    "end_time": "2023-10-25T10:10:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_7",
+    "userId": "usr_3",
+    "start_time": "2023-10-27T15:00:00Z",
+    "end_time": "2023-10-27T15:05:00Z",
+    "status": "failed"
+  },
+  {
+    "id": "ses_8",
+    "userId": "usr_6",
+    "start_time": "2023-10-30T12:00:00Z",
+    "end_time": null,
+    "status": "active"
+  },
+    {
+    "id": "ses_9",
+    "userId": "usr_2",
+    "start_time": "2023-10-22T13:00:00Z",
+    "end_time": "2023-10-22T13:30:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "ses_10",
+    "userId": "usr_4",
+    "start_time": "2023-10-21T09:00:00Z",
+    "end_time": "2023-10-21T09:15:00Z",
+    "status": "completed"
+  }
+]

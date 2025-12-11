@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sum_1",
+    "session_id": "ses_1",
+    "summary": "The user inquired about the computer science program, its admission requirements, and seat availability. The agent provided details on the program, GPA requirements, and confirmed that 12 seats are available for the next intake at the Maplewood campus.",
+    "model": "gemini-1.5-pro",
+    "tokens": 72,
+    "created_at": "2023-10-28T14:31:00Z"
+  },
+  {
+    "id": "sum_2",
+    "session_id": "ses_2",
+    "summary": "User asked a brief question about the business program. No detailed information was provided in this short session.",
+    "model": "gemini-1.5-flash",
+    "tokens": 25,
+    "created_at": "2023-10-29T09:16:00Z"
+  }
+]
