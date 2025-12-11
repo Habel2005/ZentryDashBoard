@@ -14,8 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import type { SeatAvailability } from '@/lib/definitions';
-import { updateSeat } from '@/lib/api';
-import { revalidatePath } from 'next/cache';
+import { updateSeat } from '@/lib/actions';
 
 interface EditSeatModalProps {
   seat: SeatAvailability | null;
