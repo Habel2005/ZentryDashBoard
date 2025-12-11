@@ -18,10 +18,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         setCollapsed={setSidebarCollapsed}
       />
       <div className={cn(
-          "flex flex-1 flex-col transition-all duration-300",
-          isSidebarCollapsed ? "md:pl-20" : "md:pl-72"
+          "flex flex-1 flex-col transition-all duration-300 ease-in-out",
+          isSidebarCollapsed ? "md:pl-20" : "md:pl-64"
         )}>
-        <Header setMobileOpen={setMobileOpen} />
+        <Header setMobileOpen={setMobileOpen} isSidebarCollapsed={isSidebarCollapsed} />
         <main className="flex-1 bg-background p-4 md:p-8">
           {children}
         </main>

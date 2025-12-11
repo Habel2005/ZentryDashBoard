@@ -11,14 +11,18 @@ import {
 import { Button } from '@/components/ui/button';
 import type { Dispatch, SetStateAction } from 'react';
 import { Breadcrumbs } from './breadcrumbs';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
     setMobileOpen: Dispatch<SetStateAction<boolean>>;
+    isSidebarCollapsed: boolean;
 }
 
-export function Header({ setMobileOpen }: HeaderProps) {
+export function Header({ setMobileOpen, isSidebarCollapsed }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-8">
+    <header className={cn(
+      "sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-8",
+      )}>
       <MobileMenuButton setMobileOpen={setMobileOpen} />
       <div className="w-full flex-1">
         <Breadcrumbs />
