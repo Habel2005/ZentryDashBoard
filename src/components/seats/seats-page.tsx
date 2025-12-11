@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -30,6 +30,11 @@ export function SeatsPage({ initialSeats }: SeatsPageProps) {
   const [seats, setSeats] = useState(initialSeats);
   const [selectedSeat, setSelectedSeat] = useState<SeatAvailability | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleEditClick = (seat: SeatAvailability) => {
     setSelectedSeat(seat);
@@ -76,8 +81,8 @@ export function SeatsPage({ initialSeats }: SeatsPageProps) {
                     <TableCell>{seat.campus}</TableCell>
                     <TableCell>{seat.quota_type}</TableCell>
                     <TableCell className="font-semibold">{seat.available_seats}</TableCell>
-                    <TableCell title={format(new Date(seat.last_updated), "PPPppp")}>
-                        {formatDistanceToNow(new Date(seat.last_updated), { addSuffix: true })}
+                    <TableCell title={isClient ? format(new Date(seat.last_updated), "PPPppp") : ''}>
+                        {isClient ? formatDistanceToNow(new Date(seat.last_updated), { addSuffix: true }) : ''}
                     </TableCell>
                     <TableCell className="text-right">
                       <Button
