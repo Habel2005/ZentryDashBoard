@@ -37,7 +37,7 @@ export function Sidebar({ isMobileOpen, setMobileOpen }: SidebarProps) {
         <Link href="/dashboard" className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="h-8 w-8 text-primary">
                 <rect width="256" height="256" fill="none"></rect>
-                <path d="M88,144V112a32,32,0,0,1,64,0v32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><path d="M128,176a24,24,0,1,0-24-24A24,24,0,0,0,128,176Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path>
+                <path d="M88,144V112a32,32,0,0,1,64,0v32" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path><path d="M128,176a24,24,0,1,0-24-24A24,24,0,0,0,128,176Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path>
             </svg>
           <span className="text-xl font-bold">Zentry</span>
         </Link>
