@@ -1,16 +1,17 @@
-import { fetchSessions, fetchUsers } from '@/lib/api';
+import { fetchRecentSessions, fetchUsers, fetchSessions } from '@/lib/api';
 import { KpiCard } from '@/components/dashboard/kpi-card';
 import { RecentSessions } from '@/components/dashboard/recent-sessions';
 import { Users, MessageSquare, Hourglass, CheckCircle } from 'lucide-react';
 
 export default async function DashboardPage() {
   const users = await fetchUsers();
-  const sessions = await fetchSessions();
+  const allSessions = await fetchSessions();
+  const recentSessions = await fetchRecentSessions();
 
   const totalUsers = users.length;
-  const totalSessions = sessions.length;
-  const activeSessions = sessions.filter(s => s.status === 'active').length;
-  const completedSessions = sessions.filter(s => s.status === 'completed').length;
+  const totalSessions = allSessions.length;
+  const activeSessions = allSessions.filter(s => s.status === 'active').length;
+  const completedSessions = allSessions.filter(s => s.status === 'completed').length;
 
   return (
     <div className="space-y-8">
@@ -24,7 +25,7 @@ export default async function DashboardPage() {
       </div>
 
       <div>
-        <RecentSessions sessions={sessions} users={users} />
+        <RecentSessions sessions={recentSessions} />
       </div>
     </div>
   );

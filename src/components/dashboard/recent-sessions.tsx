@@ -20,16 +20,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Session, User } from '@/lib/definitions';
+import type { Session } from '@/lib/definitions';
 import { formatDistanceToNow } from 'date-fns';
 
 interface RecentSessionsProps {
   sessions: Session[];
-  users: User[];
 }
 
-export function RecentSessions({ sessions, users }: RecentSessionsProps) {
-  const userMap = new Map(users.map(user => [user.phone, user]));
+export function RecentSessions({ sessions }: RecentSessionsProps) {
 
   return (
     <Card>
@@ -55,12 +53,10 @@ export function RecentSessions({ sessions, users }: RecentSessionsProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sessions.slice(0, 5).map(session => {
-              const user = userMap.get(session.user_phone);
-              return (
+            {sessions.slice(0, 5).map(session => (
               <TableRow key={session.id}>
                 <TableCell>
-                  <div className="font-medium">{user?.name || 'Unknown User'}</div>
+                  <div className="font-medium">{session.user?.name || 'Unknown User'}</div>
                   <div className="hidden text-sm text-muted-foreground md:inline">
                     {session.user_phone}
                   </div>
@@ -80,7 +76,7 @@ export function RecentSessions({ sessions, users }: RecentSessionsProps) {
                     {formatDistanceToNow(new Date(session.start_time), { addSuffix: true })}
                 </TableCell>
               </TableRow>
-            )})}
+            ))}
           </TableBody>
         </Table>
       </CardContent>

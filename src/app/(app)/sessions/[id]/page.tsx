@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { fetchSession, fetchSessionMessages, fetchSessionSummary, fetchUsers } from '@/lib/api';
+import { fetchSessionById, fetchSessionMessages, fetchSessionSummary } from '@/lib/api';
 import { TranscriptViewer } from '@/components/sessions/transcript-viewer';
 import { SummaryPanel } from '@/components/sessions/summary-panel';
 import { ChevronLeft } from 'lucide-react';
@@ -11,18 +11,17 @@ interface PageProps {
 }
 
 export default async function SessionDetailPage({ params }: PageProps) {
-  const [session, messages, summary, users] = await Promise.all([
-    fetchSession(params.id),
+  const [session, messages, summary] = await Promise.all([
+    fetchSessionById(params.id),
     fetchSessionMessages(params.id),
     fetchSessionSummary(params.id),
-    fetchUsers()
   ]);
 
   if (!session) {
     notFound();
   }
 
-  const user = users.find(u => u.phone === session.user_phone);
+  const user = session.user;
 
   return (
     <div className="space-y-6">

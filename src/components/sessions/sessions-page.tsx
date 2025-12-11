@@ -64,7 +64,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
         const user = userMap.get(session.user_phone);
         const lowerCaseSearch = searchTerm.toLowerCase();
         
-        const matchesSearch = session.user_phone.toLowerCase().includes(lowerCaseSearch) || session.id.toLowerCase().includes(lowerCaseSearch);
+        const matchesSearch = session.user_phone.toLowerCase().includes(lowerCaseSearch) || session.id.toLowerCase().includes(lowerCaseSearch) || user?.name.toLowerCase().includes(lowerCaseSearch);
         const matchesStatus = statusFilter === 'all' || session.status === statusFilter;
         
         return matchesSearch && matchesStatus;
@@ -78,14 +78,6 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
     currentPage * SESSIONS_PER_PAGE
   );
 
-  const getDuration = (start: string, end: string | null) => {
-    if (!end) return '-';
-    const durationMs = new Date(end).getTime() - new Date(start).getTime();
-    const minutes = Math.floor(durationMs / 60000);
-    const seconds = ((durationMs % 60000) / 1000).toFixed(0);
-    return `${minutes}m ${seconds}s`;
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -97,7 +89,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search by Session ID or User Phone..."
+              placeholder="Search by Session ID, User Name, or Phone..."
               className="pl-10"
               value={searchTerm}
               onChange={(e) => {
@@ -157,7 +149,7 @@ export function SessionsPage({ sessions, users }: SessionsPageProps) {
                     <TableCell>
                       {formatDistanceToNow(new Date(session.start_time), { addSuffix: true })}
                     </TableCell>
-                    <TableCell>{getDuration(session.start_time, session.end_time)}</TableCell>
+                    <TableCell>{session.duration || '-'}</TableCell>
                     <TableCell className="text-right">
                       <Button asChild variant="ghost" size="icon">
                         <Link href={`/sessions/${session.id}`}>

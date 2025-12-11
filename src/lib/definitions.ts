@@ -16,6 +16,8 @@ export type Session = {
   end_time: string | null;
   meta: Record<string, any> | null;
   user_id: string | null;
+  duration?: string;
+  user?: Partial<User>;
 };
 
 export type SessionMessage = {
