@@ -80,20 +80,18 @@ export function Sidebar({ isMobileOpen, setMobileOpen, isCollapsed, setCollapsed
   
   const sidebarHeader = (
     <div className={cn("flex items-center h-16 px-4 border-b", isCollapsed ? "justify-center" : "justify-between")}>
-      <Link href="/dashboard" className={cn("flex items-center gap-2 font-bold", isCollapsed && "justify-center")}>
+      <Link href="/dashboard" className={cn("flex items-center gap-2 font-bold", isCollapsed && "hidden")}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="h-7 w-7 text-primary shrink-0">
             <rect width="256" height="256" fill="none"></rect>
             <path d="M88,144V112a32,32,0,0,1,64,0v32" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path><path d="M128,176a24,24,0,1,0-24-24A24,24,0,0,0,128,176Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></path>
         </svg>
-        <div className={cn("flex flex-col overflow-hidden transition-all duration-300", isCollapsed ? "w-0" : "w-auto ml-1")}>
+        <div className={cn("flex flex-col overflow-hidden")}>
             <span className="text-lg">Zentry</span>
         </div>
       </Link>
-      <div className={cn("overflow-hidden transition-all duration-300", isCollapsed ? "w-0" : "w-auto")}>
-        <Button variant="ghost" size="icon" onClick={() => setCollapsed(!isCollapsed)}>
-            <PanelLeft className="h-5 w-5" />
-        </Button>
-      </div>
+      <Button variant="ghost" size="icon" onClick={() => setCollapsed(!isCollapsed)}>
+          {isCollapsed ? <PanelRight className="h-5 w-5" /> : <PanelLeft className="h-5 w-5" />}
+      </Button>
     </div>
   );
 
@@ -141,7 +139,7 @@ export function Sidebar({ isMobileOpen, setMobileOpen, isCollapsed, setCollapsed
 
       {/* Desktop Sidebar */}
       <aside className={cn(
-        "hidden md:flex flex-col border-r bg-card transition-all duration-300 ease-in-out",
+        "hidden md:flex flex-col border-r bg-card fixed inset-y-0 left-0 z-40 transition-all duration-300 ease-in-out",
         isCollapsed ? "w-20" : "w-64"
         )}>
         <div className="flex h-full max-h-screen flex-col">
